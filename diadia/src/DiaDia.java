@@ -1,5 +1,6 @@
 
 
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -26,7 +27,7 @@ public class DiaDia {
 			"o regalarli se pensi che possano ingraziarti qualcuno.\n\n"+
 			"Per conoscere le istruzioni usa il comando 'aiuto'.";
 	
-	static final private String[] elencoComandi = {"vai", "aiuto", "fine"};
+	static final private String[] elencoComandi = {"vai", "aiuto", "fine", "prendi", "posa"};
 
 	private Partita partita;
 
@@ -57,15 +58,26 @@ public class DiaDia {
 		if (comandoDaEseguire.getNome().equals("fine")) {
 			this.fine(); 
 			return true;
+			
 		} else if (comandoDaEseguire.getNome().equals("vai"))
 			this.vai(comandoDaEseguire.getParametro());
+		
 		else if (comandoDaEseguire.getNome().equals("aiuto"))
 			this.aiuto();
+		
+		else if(comandoDaEseguire.getNome().equals("prendi"))
+			this.prendi(comandoDaEseguire.getParametro());
+		
+		else if(comandoDaEseguire.getNome().equals("posa"))
+			this.posa(comandoDaEseguire.getParametro());
+		
 		else
 			System.out.println("Comando sconosciuto");
+		
 		if (this.partita.vinta()) {
 			System.out.println("Hai vinto!");
 			return true;
+			
 		} else
 			return false;
 	}   
@@ -94,10 +106,36 @@ public class DiaDia {
 			System.out.println("Direzione inesistente");
 		else {
 			this.partita.getLabirinto().setStanzaCorrente(prossimaStanza);
-			int cfu = this.partita.getCfu();
-			this.partita.setCfu(cfu--);
+			int cfu = this.partita.getGiocatore().getCfu();
+			this.partita.getGiocatore().setCfu(cfu--);
 		}
 		System.out.println(this.partita.getLabirinto().getStanzaCorrente().getDescrizione());
+	}
+	/*Funzione per prendere un oggetto*/
+	private void prendi(String nomeAttrezzo) {
+		if (this.partita.getLabirinto().getStanzaCorrente().hasAttrezzo(nomeAttrezzo)) {
+			
+			Attrezzo attrezzoPrendi = this.partita.getLabirinto().getStanzaCorrente().getAttrezzo(nomeAttrezzo);
+			int pesoAttrezzoPrendi = attrezzoPrendi.getPeso();
+			
+			if(this.partita.getGiocatore().getBorsa().hasSpazioDisponibile(pesoAttrezzoPrendi)) {
+				this.partita.getLabirinto().getStanzaCorrente().removeAttrezzo(attrezzoPrendi);
+				this.partita.getGiocatore().getBorsa().addAttrezzo(attrezzoPrendi);
+		}
+
+		}else {
+			System.out.println("Non è possibile prendere l'attrezzo desiderato \n");
+		}
+	}
+	/*Funzione per posare un oggetto*/
+	private void posa(String nomeAttrezzo) {
+		if(!this.partita.getLabirinto().getStanzaCorrente().stanzaPiena() && this.partita.getGiocatore().getBorsa().hasAttrezzo(nomeAttrezzo)) {
+			Attrezzo attrezzoPosa = this.partita.getGiocatore().getBorsa().removeAttrezzo(nomeAttrezzo);
+			this.partita.getLabirinto().getStanzaCorrente().addAttrezzo(attrezzoPosa);
+			
+		}else {
+			System.out.print("Non è possibile posare l'attrezzo desiderato \n");
+		}
 	}
 
 	/**

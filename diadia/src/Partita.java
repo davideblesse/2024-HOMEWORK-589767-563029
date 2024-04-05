@@ -1,6 +1,3 @@
-
-
-
 /**
  * Questa classe modella una partita del gioco
  *
@@ -11,20 +8,22 @@
 
 public class Partita {
 
-	static final private int CFU_INIZIALI = 20;
-
 	private Labirinto labirinto;
+	private Giocatore giocatore;
 	private boolean finita;
-	private int cfu;
 	
 	public Partita(){
 		this.labirinto = new Labirinto();
+		this.giocatore = new Giocatore();
 		this.finita = false;
-		this.cfu = CFU_INIZIALI;
 	}
 	
 	public Labirinto getLabirinto() {
 		return this.labirinto;
+	}
+	
+	public Giocatore getGiocatore() {
+		return this.giocatore;
 	}
 	
 	/**
@@ -40,7 +39,7 @@ public class Partita {
 	 * @return vero se partita finita
 	 */
 	public boolean isFinita() {
-		return finita || vinta() || (cfu == 0);
+		return finita || vinta() || (giocatore.getCfu() == 0);
 	}
 
 	/**
@@ -49,13 +48,5 @@ public class Partita {
 	 */
 	public void setFinita() {
 		this.finita = true;
-	}
-
-	public int getCfu() {
-		return this.cfu;
-	}
-
-	public void setCfu(int cfu) {
-		this.cfu = cfu;		
 	}	
 }
