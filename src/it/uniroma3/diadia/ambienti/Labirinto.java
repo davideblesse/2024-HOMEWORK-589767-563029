@@ -7,10 +7,10 @@ public class Labirinto {
 	private Stanza stanzaVincente;
 	
 	public Labirinto() {
-		this.init();
+		this.creaStanze();
 	}
 	
-    private void init() {
+    private void creaStanze() {
 
 		/* crea gli attrezzi */
     	Attrezzo lanterna = new Attrezzo("lanterna",3);

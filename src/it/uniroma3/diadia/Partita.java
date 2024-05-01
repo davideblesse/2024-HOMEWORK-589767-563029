@@ -32,6 +32,14 @@ public class Partita {
 		return this.giocatore;
 	}
 	
+	public Stanza getStanzaCorrente() {
+		return this.labirinto.getStanzaCorrente();
+	}
+	
+	public void setStanzaCorrente(Stanza prossimaStanza) {
+		this.labirinto.setStanzaCorrente(prossimaStanza);
+	}
+	
 	/**
 	 * Restituisce vero se e solo se la partita e' stata vinta
 	 * @return vero se partita vinta
@@ -54,5 +62,10 @@ public class Partita {
 	 */
 	public void setFinita() {
 		this.finita = true;
-	}	
+	}
+
+	public boolean giocatoreIsVivo() {
+		return giocatore.getCfu()>0;
+	}
+	
 }
