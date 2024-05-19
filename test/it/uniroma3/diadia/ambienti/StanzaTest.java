@@ -50,7 +50,7 @@ public class StanzaTest {
 	@Test
 	public void testAggiungoNAttrezzi(){
 		creaEimpostaNAttrezzi(testStanza, 10);
-		assertEquals(10, testStanza.getAttrezzi().length);
+		assertEquals(10, testStanza.getAttrezzi().size());
 	}
 	
 	@Test

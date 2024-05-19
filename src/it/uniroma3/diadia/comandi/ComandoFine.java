@@ -5,11 +5,13 @@ import it.uniroma3.diadia.Partita;
 
 public class ComandoFine implements Comando{
 	
+	final public static String MESSAGGIO_FINE = "Grazie di aver giocato!";
 	private IO io;
 
 	@Override
 	public void esegui(Partita partita) {
-		io.mostraMessaggio("Grazie di aver giocato!"); // si desidera smettere
+		partita.setFinita();
+		io.mostraMessaggio(MESSAGGIO_FINE); // si desidera smettere
 	}
 
 	@Override
@@ -29,5 +31,7 @@ public class ComandoFine implements Comando{
 	public void setIO(IO io) {
 		this.io = io;	
 	}
+	
+	
 
 }

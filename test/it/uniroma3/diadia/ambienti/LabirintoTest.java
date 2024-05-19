@@ -11,7 +11,10 @@ public class LabirintoTest {
 	
 	@Before
 	public void setUp() {
-		labirinto = new Labirinto();
+		labirinto = new LabirintoBuilder()
+			.addStanzaIniziale("Atrio")
+			.addStanzaVincente("Biblioteca")
+			.getLabirinto();
 	}
 	
 	@Test

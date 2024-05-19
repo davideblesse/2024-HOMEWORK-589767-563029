@@ -17,6 +17,11 @@ class StanzaMagica extends Stanza {
 		this.contatoreAttrezziPosati = 0;
 		this.sogliaMagica = soglia;
 	}
+	
+	@Override
+	public boolean isMagica() {
+		return true;
+	}
 
 	@Override
 	public boolean addAttrezzo(Attrezzo attrezzo) {

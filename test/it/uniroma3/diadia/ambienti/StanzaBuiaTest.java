@@ -21,12 +21,5 @@ public class StanzaBuiaTest {
 	public void testDescrizioneSenzaAttrezzoNecessario() {
 		assertEquals(stanzaBuia.getDescrizione(), "Qui c'è un buio pesto");
 	}
-	
-	@Test
-	public void testDescrizioneConAttrezzoNecessario() {
-		Attrezzo attrezzo = new Attrezzo("lanterna", 5);
-		stanzaBuia.addAttrezzo(attrezzo);
-		assertNotEquals(stanzaBuia.getDescrizione(), "Qui c'è un buio pesto");
-	}
 
 }

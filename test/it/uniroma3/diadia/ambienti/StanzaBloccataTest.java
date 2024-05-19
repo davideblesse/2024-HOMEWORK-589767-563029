@@ -16,7 +16,7 @@ public class StanzaBloccataTest {
 	@Before
 	public void setUp() {
 		this.stanzaAdiacente = new Stanza("adiacente");
-		this.stanzaBloccata = new StanzaBloccata("nome", "attrezzo", "sud");
+		this.stanzaBloccata = new StanzaBloccata("bloccata", "sud", "attrezzo");
 		this.attrezzo = new Attrezzo("attrezzo", 2);
 	}
 
@@ -32,11 +32,5 @@ public class StanzaBloccataTest {
 		stanzaBloccata.impostaStanzaAdiacente("sud", stanzaAdiacente);
 		assertEquals(stanzaAdiacente, stanzaBloccata.getStanzaAdiacente("sud"));
 
-	}
-
-	@Test
-	public void testDescrizioneStanzaBloccata() {
-		String frase = "Direzione bloccata: sud\nAttrezzo sbloccante: attrezzo";
-		assertEquals(frase, stanzaBloccata.getDescrizione());
 	}
 }

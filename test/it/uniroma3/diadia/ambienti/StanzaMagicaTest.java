@@ -26,8 +26,8 @@ public class StanzaMagicaTest {
 	@Test
 	public void testAggiungoUnAttrezzoSopraSoglia(){
 		creaEimpostaNAttrezzi(stanzaMagica, 3);
-		creaEimpostaAttrezzo(stanzaMagica, "abcd", 5);
-		assertEquals(new Attrezzo("dcba", 10), stanzaMagica.getAttrezzo("dcba"));
+		creaEimpostaAttrezzo(stanzaMagica, "abcd", 2);
+		assertEquals(new Attrezzo("dcba", 4), stanzaMagica.getAttrezzo("dcba"));
 	}	
 	
 	

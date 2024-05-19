@@ -8,11 +8,14 @@ import org.junit.Test;
 import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 
 public class ComandoVaiTest {
 	
 	private ComandoVai comandoVai;
 	private Partita partita;
+	private Labirinto labirinto;
 	private IO io;
 	
 	
@@ -20,7 +23,13 @@ public class ComandoVaiTest {
 	@Before
 	public void setUp() throws Exception {
 		comandoVai = new ComandoVai();
-		partita = new Partita();
+		labirinto = new LabirintoBuilder()
+				.addStanzaIniziale("Atrio")
+				.addStanzaVincente("Aula N10")
+				.addAdiacenza("Atrio", "Aula N10", "sud")
+				.addAdiacenza("Aula N10", "Atrio", "nord")
+				.getLabirinto();
+		partita = new Partita(labirinto);
 		io = new IOConsole();
 		comandoVai.setIO(io);
 	}

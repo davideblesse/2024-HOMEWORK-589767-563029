@@ -1,15 +1,15 @@
 package it.uniroma3.diadia.comandi;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
-import it.uniroma3.diadia.comandi.ComandoPosa;
 
 public class ComandoPosaTest {
 
@@ -17,13 +17,20 @@ public class ComandoPosaTest {
 	private Partita partita;
 	private Attrezzo attrezzo;
 	private IOConsole io;
+	private Labirinto labirinto;
 
 	@Before
 	public void setUp() {
 		this.comandoPosa = new ComandoPosa();
 		this.io = new IOConsole();
 		comandoPosa.setIO(io);
-		this.partita = new Partita();
+		labirinto = new LabirintoBuilder()
+						.addStanzaIniziale("Biblioteca")
+						.addStanzaVincente("N10")
+						.getLabirinto();
+				
+				
+		this.partita = new Partita(labirinto);
 		this.attrezzo = new Attrezzo("attrezzo", 2);
 	}
 
@@ -43,7 +50,7 @@ public class ComandoPosaTest {
 		partita.getGiocatore().getBorsa().addAttrezzo(attrezzo);
 		comandoPosa.esegui(partita);
 
-		assertTrue(partita.getGiocatore().getBorsa().hasAttrezzo("attrezzo"));
+		assertFalse(partita.getStanzaCorrente().hasAttrezzo("attrezzo"));
 	}
 
 	@Test
@@ -55,7 +62,7 @@ public class ComandoPosaTest {
 
 	public void creaEAggiungiAttrezziStanza() {
 		for (int i = 0; i < 11; i++) {
-			Attrezzo newAttrezzo = new Attrezzo("nuovo", 1);
+			Attrezzo newAttrezzo = new Attrezzo("nuovo"+i, 1);
 			partita.getLabirinto().getStanzaCorrente().addAttrezzo(newAttrezzo);
 		}
 	}

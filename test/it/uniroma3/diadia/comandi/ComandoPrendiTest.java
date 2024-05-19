@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class ComandoPrendiTest {
@@ -16,11 +18,16 @@ public class ComandoPrendiTest {
 	private Partita partita;
 	private IOConsole io;
 	private Attrezzo attrezzo;
+	private Labirinto labirinto;
 
 	@Before
 	public void setUp() {
 		this.comandoPrendi = new ComandoPrendi();
-		this.partita = new Partita();
+		this.labirinto = new LabirintoBuilder()
+				.addStanzaIniziale("Biblioteca")
+				.addStanzaVincente("N10")
+				.getLabirinto();
+		this.partita = new Partita(labirinto);
 		this.io = new IOConsole();
 		comandoPrendi.setIO(io);
 		this.attrezzo = new Attrezzo("attrezzo", 2);
@@ -52,7 +59,7 @@ public class ComandoPrendiTest {
 
 	public void aggiungiAttrezziGiocatore() {
 		for (int i = 0; i < 11; i++) {
-			Attrezzo nuovoAttrezzo = new Attrezzo("nuovoAttrezzo", 1);
+			Attrezzo nuovoAttrezzo = new Attrezzo("nuovoAttrezzo"+i, 1);
 			partita.getGiocatore().getBorsa().addAttrezzo(nuovoAttrezzo);
 		}
 	}
