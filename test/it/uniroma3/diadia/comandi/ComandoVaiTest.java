@@ -2,6 +2,8 @@ package it.uniroma3.diadia.comandi;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Scanner;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,7 +11,7 @@ import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
+import it.uniroma3.diadia.ambienti.Labirinto.LabirintoBuilder;
 
 public class ComandoVaiTest {
 	
@@ -30,7 +32,7 @@ public class ComandoVaiTest {
 				.addAdiacenza("Aula N10", "Atrio", "nord")
 				.getLabirinto();
 		partita = new Partita(labirinto);
-		io = new IOConsole();
+		io = new IOConsole(new Scanner(System.in));
 		comandoVai.setIO(io);
 	}
 	

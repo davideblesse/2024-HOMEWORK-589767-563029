@@ -1,9 +1,10 @@
 package it.uniroma3.diadia;
 
+import java.util.Scanner;
+
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.comandi.Comando;
-import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
+import it.uniroma3.diadia.comandi.FabbricaDiComandiRiflessiva;
 
 /**
  * Classe principale di diadia, un semplice gioco di ruolo ambientato al dia.
@@ -37,7 +38,7 @@ public class DiaDia {
 	}
 	
 
-	public void gioca() {
+	public void gioca() throws Exception {
 		String istruzione;
 
 		io.mostraMessaggio(MESSAGGIO_BENVENUTO);
@@ -51,10 +52,11 @@ public class DiaDia {
 	 *
 	 * @return true se l'istruzione e' eseguita e il gioco continua, false
 	 *         altrimenti
+	 * @throws Exception 
 	 */
-	private boolean processaIstruzione(String istruzione) {
+	private boolean processaIstruzione(String istruzione) throws Exception {
 		   Comando comandoDaEseguire;
-		   FabbricaDiComandiFisarmonica factory = new FabbricaDiComandiFisarmonica();
+		   FabbricaDiComandiRiflessiva factory = new FabbricaDiComandiRiflessiva();
 		   comandoDaEseguire = factory.costruisciComando(istruzione, this.io);
 		   comandoDaEseguire.esegui(this.partita);
 		   if (this.partita.vinta())
@@ -65,15 +67,12 @@ public class DiaDia {
 		}
 	
 
-	public static void main(String[] argc) {
-		IO io = new IOConsole();
-		Labirinto labirinto = new LabirintoBuilder()
-				.addStanzaIniziale("LabCampusOne") 
-				.addAttrezzo("osso", 1)
-				.addStanzaVincente("Biblioteca") 
-				.addAdiacenza("LabCampusOne","Biblioteca","ovest") 
-				.getLabirinto();
+	public static void main(String[] argc) throws Exception {
+		Scanner scanner = new Scanner(System.in);
+		IO io = new IOConsole(scanner);
+		Labirinto labirinto = Labirinto.newBuilder("Labirinto1.txt").getLabirinto();
 		DiaDia gioco = new DiaDia(io, labirinto);
 		gioco.gioca();
+		scanner.close();
 	}
 }

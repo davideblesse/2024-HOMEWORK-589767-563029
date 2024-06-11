@@ -12,8 +12,6 @@ import org.junit.Test;
 
 import fixture.Fixture;
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
-import it.uniroma3.diadia.comandi.ComandoFine;
 
 public class PartitaTest {
 	
@@ -23,7 +21,7 @@ public class PartitaTest {
 
 	@Before
 	public void setUp(){
-		labirinto = new LabirintoBuilder()
+		labirinto = new Labirinto.LabirintoBuilder()
 				.addStanzaIniziale("N10")
 				.getLabirinto();
 		
@@ -62,8 +60,8 @@ public class PartitaTest {
 	}
 	
 	@Test
-	public void testPartitaInteraVinta() {
-		Labirinto labirintoVinta = new LabirintoBuilder()
+	public void testPartitaInteraVinta() throws Exception {
+		Labirinto labirintoVinta = new Labirinto.LabirintoBuilder()
 				.addStanzaIniziale("Iniziale")
 				.addAttrezzo("osso", 1)
 				

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.personaggi.AbstractPersonaggio;
 
 /**
  * Classe Stanza - una stanza in un gioco di ruolo.
@@ -27,7 +28,9 @@ public class Stanza {
 
 	private String nome;
 	private Map<String, Attrezzo> attrezzi;
-	private Map<String, Stanza> stanzeAdiacenti;
+	private Map<Direzione, Stanza> stanzeAdiacenti;
+	
+	private AbstractPersonaggio personaggio;
 
 	/**
 	 * Crea una stanza. Non ci sono stanze adiacenti, non ci sono attrezzi.
@@ -48,7 +51,7 @@ public class Stanza {
 	 */
 	public void impostaStanzaAdiacente(String direzione, Stanza stanza) {
 		if(stanzeAdiacenti.size()<NUMERO_MASSIMO_DIREZIONI) {
-			this.stanzeAdiacenti.put(direzione, stanza);
+			this.stanzeAdiacenti.put(Direzione.valueOf(direzione), stanza);
 		}else {
 			System.out.println("Non puoi inserire più di "+ NUMERO_MASSIMO_DIREZIONI + " direzioni!");
 		}
@@ -60,8 +63,13 @@ public class Stanza {
 	 */
 	public Stanza getStanzaAdiacente(String direzione) {
 		Stanza stanza = null;
-		if (this.stanzeAdiacenti.containsKey(direzione))
-			stanza = this.stanzeAdiacenti.get(direzione);
+		try {
+			if (this.stanzeAdiacenti.containsKey(Direzione.valueOf(direzione)))
+				stanza = this.stanzeAdiacenti.get(Direzione.valueOf(direzione));
+		} catch (IllegalArgumentException i) {
+			System.out.println("Non è possibile aggiungere la direzione richiesta");
+			return null;
+		}
 		return stanza;
 	}
 
@@ -108,22 +116,13 @@ public class Stanza {
 	 * @return la rappresentazione stringa
 	 */
 	public String toString() {
-		StringBuilder sb = new StringBuilder("");
-		sb.append("Nome: " + getNome() + "\n");
-		sb.append("Uscite:");
-		for(Map.Entry<String, Stanza> e: stanzeAdiacenti.entrySet()) {
-			Stanza s = getStanzaAdiacente(e.getKey());
-			if(s!= null && !s.isBloccata())
-				sb.append(" " + e.getKey());
-		}
-		sb.append("\n");
-		sb.append("Attrezzi:");
-		for(Map.Entry<String, Attrezzo> e: attrezzi.entrySet()) {
-			Stanza s = getStanzaAdiacente(e.getKey());
-			if(s!= null && !s.isBloccata())
-				sb.append(" " + e.getKey());
-		}
-		return sb.toString();
+		StringBuilder risultato = new StringBuilder();
+		risultato.append(this.nome);
+		risultato.append("\nUscite: ");
+		risultato.append(this.getDirezioni().toString());
+		risultato.append("\nAttrezzi nella stanza: ");
+		risultato.append(this.getAttrezzi().toString());
+		return risultato.toString();
 	}
 
 	/**
@@ -157,11 +156,11 @@ public class Stanza {
 		return false;
 	}
 
-	public List<String> getDirezioni() {
+	public List<Direzione> getDirezioni() {
 		return new ArrayList<>(stanzeAdiacenti.keySet());
 	}
 
-	public Map<String, Stanza> getMapStanzeAdiacenti() {
+	public Map<Direzione, Stanza> getMapStanzeAdiacenti() {
 		return stanzeAdiacenti;
 	}
 
@@ -171,6 +170,14 @@ public class Stanza {
 
 	public boolean isBloccata() {
 		return false;
+	}
+	
+	public AbstractPersonaggio getPersonaggio() {
+		return personaggio;
+	}
+	
+	public void setPersonaggio(AbstractPersonaggio personaggio) {
+		this.personaggio = personaggio;
 	}
 	
 	@Override
